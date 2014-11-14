@@ -1,4 +1,4 @@
-zip
+Zip
 ===
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url] [![Dependencies][dependencies-image]][dependencies-url]
 
@@ -19,18 +19,63 @@ For use in the browser, use [browserify](https://github.com/substack/node-browse
 To use the module,
 
 ``` javascript
-var foo = require( 'compute-zip' );
+var zip = require( 'compute-zip' );
 ```
 
-#### foo( arr )
+#### zip( arr1, arr2,...[, opts] )
 
-What does this function do?
+Returns an `array` of `arrays`, where the ith element (tuple) in the returned `array` contains the ith elements of the input `arrays`.
+
+``` javascript
+var zipped = zip( [1,2], ['a','b'] );
+// returns [ [1,'a'], [2,'b'] ]
+```
+
+By default, the returned `array` length is the length of the shortest input `array`.
+
+``` javascript
+var zipped = zip( [1,2,3], ['a','b'] );
+// returns [ [1,'a'], [2,'b'] ]
+```
+
+The function accepts an `options` object with two optional properties:
+
+*	__trunc__: `boolean` specifying whether the returned `array` should truncate `arrays` longer than the shortest `array`. Default: `true`.
+*	__arrays__: `boolean` specifying whether, when provided a single input `array`, the function should interpret the argument as a list of `arrays` to be zipped (i.e., behavior similar to `zip.apply( {}, arr )`). Default: `false`.
+
+To turn off truncation,
+
+``` javascript
+var opts = {
+	'trunc': false	
+};
+
+var zipped = zip( [1,2,3], ['a','b'], opts );
+// returns [ [1,'a'], [2,'b'], [3,null] ]
+```
+
+A `null` value is included in each tuple for each `array` which does not have an element at the ith index. Note: an `array` containing a `null` value can thus not be distinguished from a `null` value arising because an `array` is shorter than other input `arrays`.
+
+If the function should interpret a single input `array` as an `array` of `arrays` to be zipped,
+
+``` javascript
+var arr = [[1,2], ['a','b']],
+	zipped;
+
+// Default behavior:
+zipped = zip( arr );
+// returns [ [[1,2]], [['a','b']] ]
+
+// Array of arrays:
+zipped = zip( arr, { 'arrays': true } );
+// returns [ [1,'a'], [2,'b'] ]
+```
 
 
 ## Examples
 
 ``` javascript
-var foo = require( 'compute-zip' );
+var zip = require( 'compute-zip' );
 ```
 
 To run the example code from the top-level application directory,
@@ -38,6 +83,11 @@ To run the example code from the top-level application directory,
 ``` bash
 $ node ./examples/index.js
 ```
+
+
+## Notes
+
+This function is modeled after Python's [`zip`](https://docs.python.org/3.3/library/functions.html#zip) function.
 
 
 ## Tests
