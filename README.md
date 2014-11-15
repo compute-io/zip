@@ -41,7 +41,7 @@ var zipped = zip( [1,2,3], ['a','b'] );
 The function accepts an `options` object with two optional properties:
 
 *	__trunc__: `boolean` specifying whether the returned `array` should truncate `arrays` longer than the shortest `array`. Default: `true`.
-*	__arrays__: `boolean` specifying whether, when provided a single input `array`, the function should interpret the argument as a list of `arrays` to be zipped (i.e., behavior similar to `zip.apply({},arr)`). Default: `false`.
+*	__arrays__: `boolean` specifying whether, when provided a single input `array`, the function should interpret the argument as a list of `arrays` to be zipped (i.e., behavior similar to `zip.apply(null, arr)`). Default: `false`.
 
 To turn off truncation,
 
