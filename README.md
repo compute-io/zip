@@ -76,6 +76,24 @@ zipped = zip( arr, { 'arrays': true } );
 
 ``` javascript
 var zip = require( 'compute-zip' );
+
+// Simulate some data...
+var x = new Array( 100 ),
+	len = x.length,
+	y1 = new Array( len ),
+	y2 = new Array( len ),
+	y3 = new Array( len );
+
+for ( var i = 0; i < len; i++ ) {
+	x[ i ] = Date.now();
+	y1[ i ] = Math.random() * 100;
+	y2[ i ] = Math.random() * 100;
+	y3[ i ] = Math.random();
+}
+
+var zipped = zip( x, y1, y2, y3 );
+
+console.log( zipped.join( '\n' ) );
 ```
 
 To run the example code from the top-level application directory,
@@ -87,7 +105,7 @@ $ node ./examples/index.js
 
 ## Notes
 
-This function is modeled after Python's [`zip`](https://docs.python.org/3.3/library/functions.html#zip) function.
+This function is inspired by Python's [`zip`](https://docs.python.org/3.3/library/functions.html#zip) function.
 
 
 ## Tests
