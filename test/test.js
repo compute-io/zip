@@ -136,6 +136,30 @@ describe( 'compute-zip', function tests() {
 		}
 	});
 
+	it( 'should allow any value for the fill option', function test() {
+		var values = [
+			'5',
+			5,
+			null,
+			undefined,
+			NaN,
+			true,
+			[],
+			{},
+			function(){}
+		];
+
+		for ( var i = 0; i < values.length; i++ ) {
+			expect( okayValue( values[i] ) ).to.not.throw( Error );
+		}
+
+		function okayValue( value ) {
+			return function() {
+				zip( [], {'fill': value} );
+			};
+		}
+	});
+
 	it( 'should throw an error if options but no array', function test() {
 		expect( foo ).to.throw( Error );
 		function foo() {
@@ -189,6 +213,26 @@ describe( 'compute-zip', function tests() {
 
 		expected = [ [1,'a'], [2,'b'], [ null, 'c' ] ];
 		actual = zip( x, y, { 'trunc': false } );
+
+		assert.deepEqual( actual, expected );
+	});
+
+	it( 'should allow arbitrary fill values', function test() {
+		var x, y, expected, actual;
+
+		x = [ 1, 2, 3 ];
+		y = [ 'a', 'b' ];
+
+		expected = [ [1,'a'], [2,'b'], [ 3, 'beep' ] ];
+		actual = zip( x, y, { 'trunc': false, 'fill': 'beep' } );
+
+		assert.deepEqual( actual, expected );
+
+		x = [ 1, 2 ];
+		y = [ 'a', 'b', 'c' ];
+
+		expected = [ [1,'a'], [2,'b'], [ 0, 'c' ] ];
+		actual = zip( x, y, { 'trunc': false, 'fill': 0 } );
 
 		assert.deepEqual( actual, expected );
 	});

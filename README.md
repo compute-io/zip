@@ -38,9 +38,10 @@ var zipped = zip( [1,2,3], ['a','b'] );
 // returns [ [1,'a'], [2,'b'] ]
 ```
 
-The function accepts an `options` object with two optional properties:
+The function accepts an `options` object with optional properties:
 
 *	__trunc__: `boolean` specifying whether the returned `array` should truncate `arrays` longer than the shortest `array`. Default: `true`.
+*	__fill__: fill value used for unequal length `arrays`. Default: `null`.
 *	__arrays__: `boolean` specifying whether, when provided a single input `array`, the function should interpret the argument as a list of `arrays` to be zipped (i.e., behavior similar to `zip.apply(null, arr)`). Default: `false`.
 
 To turn off truncation,
@@ -54,7 +55,17 @@ var zipped = zip( [1,2,3], ['a','b'], opts );
 // returns [ [1,'a'], [2,'b'], [3,null] ]
 ```
 
-A `null` value is included in each tuple for each `array` which does not have an element at the ith index. Note: an `array` containing a `null` value can thus not be distinguished from a `null` value arising because an `array` is shorter than other input `arrays`.
+A fill value is included in each tuple for each `array` which does not have an element at the ith index. By default, the fill value is `null`. To specify a different fill value, set the `fill` option.
+
+``` javascript
+var opts = {
+	'trunc': false,
+	'fill': ''
+};
+
+var zipped = zip( [1,2,3], ['a','b'], opts );
+// returns [ [1,'a'], [2,'b'], [3,''] ]
+```
 
 If the function should interpret a single input `array` as an `array` of `arrays` to be zipped,
 
