@@ -1,6 +1,6 @@
 {
   "name": "compute-zip",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Generates array tuples from input arrays.",
   "author": {
     "name": "Athan Reines",
